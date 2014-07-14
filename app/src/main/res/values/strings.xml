@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Budgetr</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="expense_name">Enter expense</string>
+    <string name="expense_amount">Enter amount</string>
+    <string name="budget_name">Budget name</string>
+    <string name="budget_start_amt">Starting amount</string>
+    <string name="title_activity_budget_list">BudgetListActivity</string>
+    <string name="title_activity_add_budget">AddBudgetActivity</string>
+    <string name="title_activity_budget_details">BudgetDetailsActivity</string>
+
+</resources>
