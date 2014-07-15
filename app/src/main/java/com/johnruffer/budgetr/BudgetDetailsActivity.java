@@ -2,6 +2,7 @@ package com.johnruffer.budgetr;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -54,10 +55,7 @@ public class BudgetDetailsActivity extends Activity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
+        return id == R.id.action_settings || super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -87,8 +85,13 @@ public class BudgetDetailsActivity extends Activity {
         TextView budgetStartingAmtTextView = (TextView) findViewById( R.id.startingBudgetAmt );
 
         budgetNameTextView.setText( budget.getName() );
-        budgetCurrentAmtTextView.setText( Double.toString( budget.getCurrentAmount() ) );
-        budgetStartingAmtTextView.setText( Double.toString( budget.getStartAmount() ) );
+        if( budget.getCurrentAmount() < 0 ) {
+            budgetCurrentAmtTextView.setTextColor( Color.RED );
+        } else {
+            budgetCurrentAmtTextView.setTextColor( Color.BLACK );
+        }
+        budgetCurrentAmtTextView.setText( String.format( "%.2f", budget.getCurrentAmount() ) );//Double.toString( budget.getCurrentAmount() ) );
+        budgetStartingAmtTextView.setText( String.format( "%.2f", budget.getStartAmount() ) );//Double.toString( budget.getStartAmount() ) );
     }
 
     private void populateExpensesList( String budgetName ) {

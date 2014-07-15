@@ -9,10 +9,14 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.johnruffer.budgetr.listeners.AddExpenseListener;
+import com.johnruffer.budgetr.listeners.SetDateButtonOnClickListener;
+
+import java.util.Date;
 
 
 public class AddExpenseActivity extends Activity {
     private static final String TAG = "AddExpenseActivity";
+    private Date expenseDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,12 +27,17 @@ public class AddExpenseActivity extends Activity {
         EditText expenseNameEditText = (EditText) findViewById( R.id.expenseName );
         EditText expenseAmountEditText = (EditText) findViewById( R.id.expenseAmount );
         Button addExpenseButton = (Button) findViewById( R.id.addExpense );
+        Button dateButton = (Button) findViewById( R.id.expenseDateButton );
+        TextView dateViewer = (TextView) findViewById( R.id.expenseDateView );
 
         String budgetName = getIntent().getStringExtra( "budget" );
+        this.expenseDate = new Date();
 
+        dateButton.setOnClickListener(
+                new SetDateButtonOnClickListener( this.expenseDate, dateViewer ) );
         addExpenseButton.setOnClickListener(
                 new AddExpenseListener( this, expenseNameEditText,
-                expenseAmountEditText, budgetName ) );
+                expenseAmountEditText, budgetName, this.expenseDate ) );
         balanceTextView.setText( "This will be your current balance" );
     }
 
@@ -45,9 +54,6 @@ public class AddExpenseActivity extends Activity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
+        return id == R.id.action_settings || super.onOptionsItemSelected(item);
     }
 }

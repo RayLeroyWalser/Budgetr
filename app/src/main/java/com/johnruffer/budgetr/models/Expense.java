@@ -47,6 +47,6 @@ public class Expense {
     @Override
     public String toString() {
         return "Expense: " + this.name +
-                " Amount: " + this.amount;
+                " Amount: " + String.format( "%.2f", this.amount );
     }
 }

@@ -5,13 +5,17 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TextView;
 
-import com.johnruffer.budgetr.R;
 import com.johnruffer.budgetr.listeners.AddBudgetListener;
+import com.johnruffer.budgetr.listeners.SetDateButtonOnClickListener;
+
+import java.util.Date;
 
 public class AddBudgetActivity extends Activity {
+    private Date startDate;
+    private Date endDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,13 +25,21 @@ public class AddBudgetActivity extends Activity {
         Button addButton = (Button) findViewById( R.id.addButton );
         EditText budgetNameEditText = (EditText) findViewById( R.id.budgetName );
         EditText startAmtEditText = (EditText) findViewById( R.id.budgetStartAmt );
-        DatePicker startDatePicker = (DatePicker) findViewById( R.id.startDate );
-        DatePicker endDatePicker = (DatePicker) findViewById( R.id.endDate );
+        Button startDateButton = (Button) findViewById( R.id.startDateButton  );
+        Button endDateButton = (Button) findViewById( R.id.endDateButton );
+        TextView startDateViewer = (TextView) findViewById( R.id.startDateView );
+        TextView endDateViewer = (TextView) findViewById( R.id.endDateView );
 
-        addButton.setOnClickListener( new AddBudgetListener( this,
-                budgetNameEditText, startAmtEditText, startDatePicker, endDatePicker ) );
+        this.startDate = new Date();
+        this.endDate = new Date();
+
+        startDateButton.setOnClickListener(
+                new SetDateButtonOnClickListener( this.startDate, startDateViewer ) );
+        endDateButton.setOnClickListener(
+                new SetDateButtonOnClickListener( this.endDate, endDateViewer ) );
+        addButton.setOnClickListener( new AddBudgetListener( budgetNameEditText,
+                startAmtEditText, this.startDate, this.endDate ) );
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -42,9 +54,6 @@ public class AddBudgetActivity extends Activity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
+        return id == R.id.action_settings || super.onOptionsItemSelected(item);
     }
 }

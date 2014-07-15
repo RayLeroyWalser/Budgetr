@@ -27,8 +27,8 @@ public class DbOpenHelper extends SQLiteOpenHelper {
                 " startdate int, enddate int);" );
         sqLiteDatabase.execSQL( "CREATE TABLE " + EXPENSES_TABLE +
                 " (id INTEGER PRIMARY KEY, expensename text," +
-                " amount double, date int," +
-                " budget text, FOREIGN KEY(budget) REFERENCES budgets(name));" );
+                " amount double, date int, budget text," +
+                " FOREIGN KEY(budget) REFERENCES budgets(name) ON DELETE CASCADE);" );
         sqLiteDatabase.execSQL( "CREATE TRIGGER decrement_amt AFTER INSERT ON " +
                 EXPENSES_TABLE + " BEGIN " +
                 " UPDATE " + BUDGETS_TABLE + " SET currentamount=((SELECT currentamount" +

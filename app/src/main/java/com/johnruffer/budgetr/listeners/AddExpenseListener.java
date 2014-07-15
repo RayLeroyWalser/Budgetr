@@ -22,17 +22,19 @@ public class AddExpenseListener implements OnClickListener {
     private final EditText name;
     private final EditText amount;
     private final String budgetName;
+    private final Date expenseDate;
 
     public AddExpenseListener( Activity activity, EditText name,
-            EditText amount, String budgetName ) {
+            EditText amount, String budgetName, Date expenseDate ) {
         this.activity = activity;
         this.name = name;
         this.amount = amount;
         this.budgetName = budgetName;
+        this.expenseDate = expenseDate;
     }
     public void onClick( View view ) {
         String expenseName = this.name.getText().toString();
-        double amount = 0.0;
+        double amount;
         try {
             amount = Double.parseDouble( this.amount.getText().toString() );
         } catch( NumberFormatException e ) {
@@ -42,12 +44,13 @@ public class AddExpenseListener implements OnClickListener {
             return;
         }
 
-        Expense expense = new Expense( this.budgetName, expenseName, amount, new Date() );
+        Expense expense = new Expense( this.budgetName,
+                expenseName, amount, this.expenseDate );
 
         ExpensesDataSource expensesDataSource = new ExpensesDataSource( view.getContext() );
         try {
             expensesDataSource.open();
-            expensesDataSource.applyExpense(expense);
+            expensesDataSource.applyExpense( expense );
         } catch( DbErrorException e ) {
             Log.e( TAG, e.getMessage() );
             Toast.makeText( view.getContext(), "Unable to apply expense",
