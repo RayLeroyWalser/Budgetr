@@ -23,7 +23,6 @@ public class AddExpenseActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_expense);
 
-        TextView balanceTextView = (TextView) findViewById( R.id.balance );
         EditText expenseNameEditText = (EditText) findViewById( R.id.expenseName );
         EditText expenseAmountEditText = (EditText) findViewById( R.id.expenseAmount );
         Button addExpenseButton = (Button) findViewById( R.id.addExpense );
@@ -38,7 +37,6 @@ public class AddExpenseActivity extends Activity {
         addExpenseButton.setOnClickListener(
                 new AddExpenseListener( this, expenseNameEditText,
                 expenseAmountEditText, budgetName, this.expenseDate ) );
-        balanceTextView.setText( "This will be your current balance" );
     }
 
     @Override
