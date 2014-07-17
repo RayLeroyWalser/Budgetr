@@ -12,9 +12,12 @@ import com.johnruffer.budgetr.R;
 import com.johnruffer.budgetr.data.BudgetsDataSource;
 import com.johnruffer.budgetr.exceptions.DbErrorException;
 import com.johnruffer.budgetr.listeners.BudgetClickedListener;
+import com.johnruffer.budgetr.listeners.BudgetListItemSelectedListener;
+import com.johnruffer.budgetr.listeners.BudgetListOnLongClickListener;
 import com.johnruffer.budgetr.listeners.NewBudgetListener;
 import com.johnruffer.budgetr.models.Budget;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class BudgetListActivity extends Activity {
@@ -74,5 +77,11 @@ public class BudgetListActivity extends Activity {
                         android.R.layout.simple_list_item_1, budgets );
         budgetList.setAdapter( budgetViews );
         budgetList.setOnItemClickListener( new BudgetClickedListener( this ) );
+
+        List<String> budgetsToBeDeleted = new ArrayList<String>();
+        budgetList.setOnLongClickListener(
+                new BudgetListOnLongClickListener( this, budgetsToBeDeleted ) );
+        budgetList.setOnItemSelectedListener(
+                new BudgetListItemSelectedListener( budgetsToBeDeleted ) );
     }
 }
